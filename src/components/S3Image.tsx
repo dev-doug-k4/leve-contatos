@@ -34,13 +34,5 @@ export default function S3Image({ imageKey, alt, ratio, sx, ...props }: Props) {
 
   return (
     <Image src={cover} alt={alt} ratio={ratio} sx={sx}  {...props} />
-    // <Image
-    //   src={cover}
-    //   src='https://zone-assets-api.vercel.app/assets/img_placeholder.svg'
-    //   placeholder='blur'
-    //   alt={alt}
-    //   ratio={ratio}
-    //   sx={sx}
-    //   {...props} />
   )
 }

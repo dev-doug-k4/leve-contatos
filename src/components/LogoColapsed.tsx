@@ -13,7 +13,7 @@ interface Props extends BoxProps {
 }
 
 const Logo = forwardRef<any, Props>(({ disabledLink = false, sx, isOffset, isHome }, ref) => {
-  const theme = useTheme();
+  // const theme = useTheme();
 
   // const isLight = theme.palette.mode === 'light';
   // const PRIMARY_MAIN = theme.palette.primary.main;

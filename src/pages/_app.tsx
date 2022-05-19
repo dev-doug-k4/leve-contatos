@@ -1,8 +1,7 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 import cookie from 'cookie';
 // next
 import { NextPage } from 'next';
-import Head from 'next/head'
 import App, { AppProps, AppContext } from 'next/app';
 // theme
 import ThemeProvider from '../theme';
@@ -12,10 +11,12 @@ import { AuthProvider } from '../contexts/AuthContext';
 // amplify
 import Amplify from 'aws-amplify'
 import config from '../aws-exports'
+import { DataStore } from '@aws-amplify/datastore';
 // utils
 import { getSettings } from '../utils/settings';
 // components
 import NotistackProvider from '../components/NotistackProvider';
+import MotionLazyContainer from '../components/animate/MotionLazyContainer';
 // @types
 import { SettingsValueProps } from '../@types/theme';
 
@@ -42,20 +43,26 @@ export default function MyApp(props: MyAppProps) {
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
+  useEffect(() => {
+    async function startDataStore() {
+      await DataStore.start();
+    }
+    try {
+      startDataStore();
+    } catch (error) {
+      console.error(error);
+    }
+  }, [])
+
   return (
     <>
-      <Head>
-        <link rel="manifest" href="/favicon/manifest.json" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
-      </Head>
-
       <AuthProvider>
         <SettingsProvider defaultSettings={settings}>
           <ThemeProvider>
             <NotistackProvider>
-              {getLayout(<Component {...pageProps} />)}
+              <MotionLazyContainer>
+                {getLayout(<Component {...pageProps} />)}
+              </MotionLazyContainer>
             </NotistackProvider>
           </ThemeProvider>
         </SettingsProvider>

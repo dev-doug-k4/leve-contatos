@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // utils
 import createAvatar from '../utils/createAvatar';
 //
@@ -19,14 +19,14 @@ export default function CustomAvatar({ src, alt, sx, ...other }: Props) {
     <Avatar
       src={src}
       alt={alt}
-      color={!!src ? 'default' : createAvatar(!!alt ? alt : 'AA').color}
+      color={!!src ? 'default' : createAvatar(!!alt ? alt : '').color}
       sx={{ ...sx }}
       {...other}
-      onError={() => setError(true)}
+    // onError={() => setError(true)}
     >
       {!!src && !error
         ? <S3Image imageKey={src} alt={alt} />
-        : createAvatar(!!alt ? alt : 'AA').name
+        : createAvatar(!!alt ? alt : '').name
       }
     </Avatar>
   );
