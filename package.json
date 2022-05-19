@@ -31,6 +31,7 @@
     "react-dropzone": "^14.2.1",
     "react-hook-form": "^7.31.1",
     "react-lazy-load-image-component": "^1.5.4",
+    "webpack": "^5.72.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {
