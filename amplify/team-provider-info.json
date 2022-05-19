@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-levecontatos-dev-112033-authRole",
+      "UnauthRoleArn": "arn:aws:iam::990003609395:role/amplify-levecontatos-dev-112033-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::990003609395:role/amplify-levecontatos-dev-112033-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-levecontatos-dev-112033-deployment",
+      "UnauthRoleName": "amplify-levecontatos-dev-112033-unauthRole",
+      "StackName": "amplify-levecontatos-dev-112033",
+      "StackId": "arn:aws:cloudformation:us-east-1:990003609395:stack/amplify-levecontatos-dev-112033/af3dcb90-d6b5-11ec-ae33-0e8399e72e25",
+      "AmplifyAppId": "dcj0rgv0wuk5j"
+    },
+    "categories": {
+      "auth": {
+        "levecontatos": {}
+      }
+    }
+  }
+}

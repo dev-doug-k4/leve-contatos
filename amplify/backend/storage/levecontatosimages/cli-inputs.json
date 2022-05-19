@@ -1,0 +1,14 @@
+{
+  "resourceName": "levecontatosimages",
+  "policyUUID": "39f5ab5d",
+  "bucketName": "levecontatos9e53e40ea7f745c9b23117c897a3f9c2",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

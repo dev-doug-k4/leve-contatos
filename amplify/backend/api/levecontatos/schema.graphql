@@ -1,0 +1,14 @@
+
+type Contact
+@model
+@auth( rules: [{ allow: owner}]) 
+{
+  id: ID!
+  name: String!
+  cover: String
+  phone: String
+  facebookLink: String
+  instagramLink: String
+  linkedinLink: String
+  twitterLink: String
+}
