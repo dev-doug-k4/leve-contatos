@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
-const withPWA = require("next-pwa");
 
-module.exports = withPWA({
+module.exports = {
   reactStrictMode: true,
-  future: { webpack5: true },
   pwa: {
     dest: "public",
     register: true,
@@ -13,4 +11,4 @@ module.exports = withPWA({
   env: {
     STORAGE_URL: `https://levecontatos9e53e40ea7f745c9b23117c897a3f9c2112033-dev.s3.amazonaws.com/public/`
   },
-});
+};

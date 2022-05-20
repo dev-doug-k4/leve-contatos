@@ -9,7 +9,7 @@ import cssStyles from '../utils/cssStyles';
 // config
 import { HEADER } from '../config';
 // components
-import LogoColapsed from './LogoColapsed';
+import Logo from './Logo';
 import Iconify from './Iconify';
 import { IconButtonAnimate } from './animate';
 
@@ -40,7 +40,7 @@ export default function Header() {
       <RootStyle>
         <Container maxWidth="md">
           <Toolbar disableGutters={true}>
-            <LogoColapsed />
+            <Logo />
 
             <Box sx={{ flexGrow: 1 }} />
             <Stack

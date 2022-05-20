@@ -3,7 +3,7 @@ import { m } from 'framer-motion';
 import { alpha, styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 //
-import Logo from './LogoColapsed';
+import Logo from './Logo';
 
 // ----------------------------------------------------------------------
 

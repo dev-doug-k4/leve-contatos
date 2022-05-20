@@ -75,7 +75,6 @@ function AuthProvider({ children }: AuthProviderProps) {
   const { push } = useRouter();
 
   const getSession = useCallback(async () => {
-    console.log('aqui')
     try {
       const session = await Auth.currentSession()
       const cognitoUser = await Auth.currentAuthenticatedUser()
