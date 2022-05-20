@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 // amplify
 import { API, graphqlOperation } from 'aws-amplify'
-import { listContacts } from '../graphql/queries';
+// import { listContacts } from '../graphql/queries';
 import { deleteContact } from '../graphql/mutations';
 // next
 import { useRouter } from 'next/router';
+
+import useAuth from '../hooks/useAuth';
 // @mui
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -30,6 +32,8 @@ import { ListContactsQuery } from '../@types/API';
 const Home = () => {
   const { push } = useRouter();
 
+  const { isAuthenticated, isInitialized } = useAuth()
+
   const [contacts, setContacts] = useState([])
 
   const [isLoading, setIsLoading] = useState(false)
@@ -51,16 +55,18 @@ const Home = () => {
   };
 
   useEffect(() => {
-    return async () => {
-      try {
-        const result = await (API.graphql(graphqlOperation(listContacts))) as { data: ListContactsQuery }
-        setContacts(result.data.listContacts.items)
-        // console.log("Contacts retrieved successfully!", JSON.stringify(result, null, 2));
-      } catch (error) {
-        console.log("Error retrieving contacts", error);
+    if (isAuthenticated && isInitialized) {
+      return async () => {
+        try {
+          const result = await (API.graphql(graphqlOperation(listContacts))) as { data: ListContactsQuery }
+          setContacts(result.data.listContacts.items)
+          // console.log("Contacts retrieved successfully!", JSON.stringify(result, null, 2));
+        } catch (error) {
+          console.log("Error retrieving contacts", error);
+        }
       }
     }
-  }, [])
+  }, [isAuthenticated, isInitialized])
 
   return (
     <AuthGuard >
@@ -95,3 +101,21 @@ const Home = () => {
 }
 
 export default Home
+
+// GRAPHQL ---------------------------------------------------
+const listContacts = /* GraphQL */ `
+  query ListContacts(
+    $filter: ModelContactFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listContacts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        cover
+      }
+      nextToken
+    }
+  }
+`;

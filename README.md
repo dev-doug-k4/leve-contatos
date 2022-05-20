@@ -1,6 +1,5 @@
 ## Leve Contatos
 
-Your fully responsive and offline contact list.
 Check out the [live-preview](https://main.dcj0rgv0wuk5j.amplifyapp.com/).
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
