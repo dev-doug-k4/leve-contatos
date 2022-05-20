@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 // amplify
 import { DataStore } from '@aws-amplify/datastore';
-import { Hub } from 'aws-amplify';
 import { Contact } from '../models'
+// hooks
+import useAuth from '../hooks/useAuth';
 // next
 import { useRouter } from 'next/router';
 // @mui
@@ -29,6 +30,8 @@ import { Contact as ContactTypes } from '../@types/API';
 
 const Home = () => {
   const { push } = useRouter();
+
+  const { isAuthenticated, isInitialized, getSession } = useAuth()
 
   const [contacts, setContacts] = useState([])
 
@@ -56,6 +59,8 @@ const Home = () => {
 
   const listContacts = async () => {
     try {
+      const init = await DataStore.start();
+
       const result = await DataStore.query(Contact);
       setContacts(result)
       // console.log("Contacts retrieved successfully!", JSON.stringify(result, null, 2));
@@ -65,17 +70,16 @@ const Home = () => {
   }
 
   useEffect(() => {
-    listContacts()
-    // Create listener
-    const listener = Hub.listen('datastore', async hubData => {
-      const { event, data } = hubData.payload;
-      if (event === 'networkStatus') {
-        console.log(`User has a network connection: ${data.active}`)
+    return async () => {
+      try {
+        // await DataStore.start();
+        const result = await DataStore.query(Contact);
+        setContacts(result)
+        // console.log("Contacts retrieved successfully!", JSON.stringify(result, null, 2));
+      } catch (error) {
+        console.log("Error retrieving contacts", error);
       }
-    })
-
-    // Remove listener
-    listener();
+    }
   }, [])
 
   return (

@@ -167,7 +167,7 @@ export default function EstablismentGeneral() {
 
   return (
     <AuthGuard >
-      <Page title={'Home'}>
+      <Page title={'Adicionar'}>
         <Header />
         <Container maxWidth="md" sx={{ mt: { xs: 10, md: 15 } }} >
           <Box>

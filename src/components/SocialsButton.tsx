@@ -69,7 +69,7 @@ export default function SocialsButton({
         const { name, icon, path, socialColor } = social;
         if (!!path) return simple ? (
           <Link key={name} href={path}>
-            <Tooltip title={name} placement="top">
+            <Tooltip title={name} placement="bottom">
               <IconButton
                 color="inherit"
                 sx={{

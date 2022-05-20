@@ -137,7 +137,6 @@ export default function EstablismentGeneral() {
           cover: file?.fileName,
         }
       }
-
       await DataStore.save(
         Contact.copyOf(contact, updated => {
           updated.name = data.name
@@ -151,7 +150,6 @@ export default function EstablismentGeneral() {
       )
 
       push(PATH_APP.root)
-
       enqueueSnackbar('Contato adicionado com sucesso!');
       setFile(null)
 
@@ -184,7 +182,7 @@ export default function EstablismentGeneral() {
     [setValue]
   );
 
-  // RESIZE FILE IN TWO SIZES -----------------------------------------------------------
+  // RESIZE FILE -----------------------------------------------------------
   const processFile = async (file: File | any) => {
     const originalFileName = file.name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
     const fileName = `contacts/${user?.sub}/${Date.now()}.webp`;
@@ -209,7 +207,7 @@ export default function EstablismentGeneral() {
 
   return (
     <AuthGuard >
-      <Page title={'Home'}>
+      <Page title={contact?.name || ''}>
         <Header />
         <Container maxWidth="md" sx={{ mt: { xs: 10, md: 15 } }} >
           <Box>

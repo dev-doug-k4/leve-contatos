@@ -11,7 +11,7 @@ import { AuthProvider } from '../contexts/AuthContext';
 // amplify
 import Amplify from 'aws-amplify'
 import config from '../aws-exports'
-import { DataStore } from '@aws-amplify/datastore';
+// import { DataStore } from '@aws-amplify/datastore';
 // utils
 import { getSettings } from '../utils/settings';
 // components
@@ -42,17 +42,6 @@ export default function MyApp(props: MyAppProps) {
   const { Component, pageProps, settings } = props;
 
   const getLayout = Component.getLayout ?? ((page) => page);
-
-  useEffect(() => {
-    async function startDataStore() {
-      await DataStore.start();
-    }
-    try {
-      startDataStore();
-    } catch (error) {
-      console.error(error);
-    }
-  }, [])
 
   return (
     <>
