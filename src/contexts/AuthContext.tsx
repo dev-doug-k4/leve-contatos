@@ -3,8 +3,6 @@ import { createContext, ReactNode, useCallback, useEffect, useReducer } from 're
 import { useRouter } from 'next/router';
 // amplify
 import { Auth } from 'aws-amplify';
-import { DataStore } from '@aws-amplify/datastore';
-import { Contact } from '../models'
 // @types
 import { ActionMap, AuthState, AuthUser, AWSCognitoContextType } from '../@types/auth';
 
@@ -78,24 +76,22 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   const getSession = useCallback(async () => {
     try {
-      await Auth.currentSession()
+      const session = await Auth.currentSession()
       const cognitoUser = await Auth.currentAuthenticatedUser()
-      cognitoUser.signInUserSession.accessToken.jwtToken
+      const token = cognitoUser.signInUserSession.accessToken.jwtToken
 
       const user = cognitoUser.attributes
-
-      await DataStore.start();
 
       dispatch({
         type: Types.auth,
         payload: { isAuthenticated: true, user },
       });
 
-      // return {
-      //   user,
-      //   session,
-      //   headers: { Authorization: token },
-      // }
+      return {
+        user,
+        session,
+        headers: { Authorization: token },
+      }
 
     } catch (error) {
       console.log(error)
@@ -126,7 +122,6 @@ function AuthProvider({ children }: AuthProviderProps) {
   const logout = async () => {
     try {
       await Auth.signOut()
-      await DataStore.clear();
       dispatch({ type: Types.logout });
       push('/auth/login')
     } catch (error) {

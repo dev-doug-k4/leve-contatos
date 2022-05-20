@@ -15,9 +15,6 @@ export const getContact = /* GraphQL */ `
       twitterLink
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -40,47 +37,9 @@ export const listContacts = /* GraphQL */ `
         twitterLink
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         owner
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncContacts = /* GraphQL */ `
-  query SyncContacts(
-    $filter: ModelContactFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncContacts(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        cover
-        phone
-        facebookLink
-        instagramLink
-        linkedinLink
-        twitterLink
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      nextToken
-      startedAt
     }
   }
 `;

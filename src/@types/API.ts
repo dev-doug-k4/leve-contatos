@@ -11,7 +11,6 @@ export type CreateContactInput = {
   instagramLink?: string | null,
   linkedinLink?: string | null,
   twitterLink?: string | null,
-  _version?: number | null,
 };
 
 export type ModelContactConditionInput = {
@@ -79,9 +78,6 @@ export type Contact = {
   twitterLink?: string | null,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
   owner?: string | null,
 };
 
@@ -94,12 +90,10 @@ export type UpdateContactInput = {
   instagramLink?: string | null,
   linkedinLink?: string | null,
   twitterLink?: string | null,
-  _version?: number | null,
 };
 
 export type DeleteContactInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type ModelContactFilterInput = {
@@ -136,7 +130,6 @@ export type ModelContactConnection = {
   __typename: "ModelContactConnection",
   items:  Array<Contact | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type CreateContactMutationVariables = {
@@ -157,9 +150,6 @@ export type CreateContactMutation = {
     twitterLink?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
     owner?: string | null,
   } | null,
 };
@@ -182,9 +172,6 @@ export type UpdateContactMutation = {
     twitterLink?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
     owner?: string | null,
   } | null,
 };
@@ -207,9 +194,6 @@ export type DeleteContactMutation = {
     twitterLink?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
     owner?: string | null,
   } | null,
 };
@@ -231,9 +215,6 @@ export type GetContactQuery = {
     twitterLink?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
     owner?: string | null,
   } | null,
 };
@@ -259,45 +240,9 @@ export type ListContactsQuery = {
       twitterLink?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
       owner?: string | null,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncContactsQueryVariables = {
-  filter?: ModelContactFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncContactsQuery = {
-  syncContacts?:  {
-    __typename: "ModelContactConnection",
-    items:  Array< {
-      __typename: "Contact",
-      id: string,
-      name: string,
-      cover?: string | null,
-      phone?: string | null,
-      facebookLink?: string | null,
-      instagramLink?: string | null,
-      linkedinLink?: string | null,
-      twitterLink?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -318,9 +263,6 @@ export type OnCreateContactSubscription = {
     twitterLink?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
     owner?: string | null,
   } | null,
 };
@@ -342,9 +284,6 @@ export type OnUpdateContactSubscription = {
     twitterLink?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
     owner?: string | null,
   } | null,
 };
@@ -366,9 +305,6 @@ export type OnDeleteContactSubscription = {
     twitterLink?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
     owner?: string | null,
   } | null,
 };

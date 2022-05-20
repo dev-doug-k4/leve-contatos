@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// @ts-nocheck 
+// @ts-nocheck
 import { useEffect, useState, useCallback } from 'react'
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 // amplify
+import { API, graphqlOperation } from 'aws-amplify'
 import { Storage } from "aws-amplify";
-import { DataStore } from '@aws-amplify/datastore';
-import { Contact } from '../../models'
-import { useRouter } from 'next/router';
+import { getContact } from '../../graphql/queries';
+import { updateContact } from '../../graphql/mutations';
 // routes
+import { useRouter } from 'next/router';
 import { PATH_APP } from '../../routes/paths';
 // hooks
 import useAuth from '../../hooks/useAuth';
@@ -38,7 +39,7 @@ import Page from '../../components/Page';
 import Header from '../../components/Header';
 import SocialsButton from '../../components/SocialsButton';
 // @types
-import { Contact as ContactTypes } from '../../@types/API';
+import { Contact as ContactTypes, GetContactQuery } from '../../@types/API';
 
 // ----------------------------------------------------------------------
 
@@ -92,23 +93,24 @@ export default function EstablismentGeneral() {
 
   const values = watch();
 
-  const getContact = async () => {
+  const fetchContact = async () => {
     try {
-      const result = await DataStore.query(Contact, query.id);
-      setContact(result)
+      const result = await (API.graphql(graphqlOperation(getContact, { id: query.id }))) as { data: GetContactQuery }
+      console.log(result)
+      const cont = result.data.getContact
 
       if (!!result) {
-        setContact(result)
-        result?.phone && setValue('phone', phoneMask(result?.phone))
-        setValue('name', result?.name)
-        setValue('facebookLink', result?.facebookLink)
-        setValue('instagramLink', result?.instagramLink)
-        setValue('linkedinLink', result?.linkedinLink)
-        setValue('twitterLink', result?.twitterLink)
+        setContact(cont)
+        setValue('phone', phoneMask(cont?.phone))
+        setValue('name', cont?.name)
+        setValue('facebookLink', cont?.facebookLink)
+        setValue('instagramLink', cont?.instagramLink)
+        setValue('linkedinLink', cont?.linkedinLink)
+        setValue('twitterLink', cont?.twitterLink)
 
-        if (!!result?.cover) {
+        if (!!cont?.cover) {
           setIsfromS3(true)
-          setValue('cover', result?.cover)
+          setValue('cover', cont?.cover)
         }
       }
     } catch (error) {
@@ -118,7 +120,7 @@ export default function EstablismentGeneral() {
 
   useEffect(() => {
     if (!!query?.id) {
-      getContact()
+      fetchContact()
     }
   }, [query])
 
@@ -137,20 +139,11 @@ export default function EstablismentGeneral() {
           cover: file?.fileName,
         }
       }
-      await DataStore.save(
-        Contact.copyOf(contact, updated => {
-          updated.name = data.name
-          updated.cover = data.cover
-          updated.phone = data.phone
-          updated.facebookLink = data.facebookLink
-          updated.instagramLink = data.instagramLink
-          updated.linkedinLink = data.linkedinLink
-          updated.twitterLink = data.twitterLink
-        })
-      )
+
+      await API.graphql(graphqlOperation(updateContact, { input: { ...data, id: contact?.id } }))
 
       push(PATH_APP.root)
-      enqueueSnackbar('Contato adicionado com sucesso!');
+      enqueueSnackbar('Contato editado com sucesso!');
       setFile(null)
 
     } catch (error) {

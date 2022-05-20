@@ -3,9 +3,9 @@ import { useEffect, useState, useCallback } from 'react'
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 // amplify
+import { API, graphqlOperation } from 'aws-amplify'
 import { Storage } from "aws-amplify";
-import { DataStore } from '@aws-amplify/datastore';
-import { Contact } from '../models'
+import { createContact } from '../graphql/mutations';
 // next
 import { useRouter } from 'next/router';
 // routes
@@ -104,9 +104,7 @@ export default function EstablismentGeneral() {
         }
       }
 
-      await DataStore.save(
-        new Contact({ ...data })
-      );
+      await API.graphql(graphqlOperation(createContact, { input: data }))
       push(PATH_APP.root)
 
       enqueueSnackbar('Contato adicionado com sucesso!');

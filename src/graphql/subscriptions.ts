@@ -15,9 +15,6 @@ export const onCreateContact = /* GraphQL */ `
       twitterLink
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -35,9 +32,6 @@ export const onUpdateContact = /* GraphQL */ `
       twitterLink
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -55,9 +49,6 @@ export const onDeleteContact = /* GraphQL */ `
       twitterLink
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }

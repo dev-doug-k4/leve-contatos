@@ -2,10 +2,9 @@
 import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 // amplify
-import { DataStore } from '@aws-amplify/datastore';
-import { Contact } from '../models'
-// hooks
-import useAuth from '../hooks/useAuth';
+import { API, graphqlOperation } from 'aws-amplify'
+import { listContacts } from '../graphql/queries';
+import { deleteContact } from '../graphql/mutations';
 // next
 import { useRouter } from 'next/router';
 // @mui
@@ -24,14 +23,12 @@ import Iconify from '../components/Iconify';
 import Header from '../components/Header';
 import ContactCard from '../components/ContactCard'
 // @types
-import { Contact as ContactTypes } from '../@types/API';
+import { ListContactsQuery } from '../@types/API';
 
 // ----------------------------------------------------------------------
 
 const Home = () => {
   const { push } = useRouter();
-
-  const { isAuthenticated, isInitialized, getSession } = useAuth()
 
   const [contacts, setContacts] = useState([])
 
@@ -42,13 +39,9 @@ const Home = () => {
   const handleDeleteContact = async (id: string) => {
     try {
       setIsLoading(true)
-
-      const result = await DataStore.query(Contact, id);
-      DataStore.delete(result);
-
+      await API.graphql(graphqlOperation(deleteContact, { input: { id: id } }))
       const newContacts = contacts.filter(c => c.id !== id)
       setContacts(newContacts)
-
       enqueueSnackbar('Contacto excluido com sucesso')
     } catch (error) {
       console.log(error)
@@ -57,24 +50,11 @@ const Home = () => {
     setIsLoading(false)
   };
 
-  const listContacts = async () => {
-    try {
-      const init = await DataStore.start();
-
-      const result = await DataStore.query(Contact);
-      setContacts(result)
-      // console.log("Contacts retrieved successfully!", JSON.stringify(result, null, 2));
-    } catch (error) {
-      console.log("Error retrieving contacts", error);
-    }
-  }
-
   useEffect(() => {
     return async () => {
       try {
-        // await DataStore.start();
-        const result = await DataStore.query(Contact);
-        setContacts(result)
+        const result = await (API.graphql(graphqlOperation(listContacts))) as { data: ListContactsQuery }
+        setContacts(result.data.listContacts.items)
         // console.log("Contacts retrieved successfully!", JSON.stringify(result, null, 2));
       } catch (error) {
         console.log("Error retrieving contacts", error);

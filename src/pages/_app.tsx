@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useEffect } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import cookie from 'cookie';
 // next
 import { NextPage } from 'next';
@@ -11,7 +11,6 @@ import { AuthProvider } from '../contexts/AuthContext';
 // amplify
 import Amplify from 'aws-amplify'
 import config from '../aws-exports'
-// import { DataStore } from '@aws-amplify/datastore';
 // utils
 import { getSettings } from '../utils/settings';
 // components

@@ -132,10 +132,10 @@ function MoreMenuButton({ contact, onDelete, isLoading }: Props) {
 
       {!!dialog &&
         <Dialog open={!!dialog} onClose={() => setDialog(false)}>
-          <DialogTitle>Excluir contacto</DialogTitle>
+          <DialogTitle>Excluir contato</DialogTitle>
           <DialogContent sx={{ mt: 1, pb: 0 }}>
             <DialogContentText>
-              Deseja realmente excluir esse contacto?
+              Deseja realmente excluir esse contato?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
