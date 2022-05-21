@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, memo } from "react";
 // next
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -77,7 +77,7 @@ function ContactItem({ contact, onDelete, isLoading }: Props) {
     </Paper>
   );
 };
-export default ContactItem
+export default memo(ContactItem)
 
 // MENU ----------------------------------------------------------------------
 

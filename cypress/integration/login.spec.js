@@ -1,19 +1,20 @@
 /// <reference types="cypress" />
 
 context('Login', () => {
-    // beforeEach(() => {
-    //     cy.visit('http://localhost:3000/auth/login');
-    // });
+    it('logging in user', () => {
+        cy.visit('http://localhost:3000/auth/login')
 
-    beforeEach(() => {
-        cy.visit('http://localhost:3000/');
-    });
+        cy.get('[name="email"]')
+            .type('demo@testepagaleve.com')
 
-    it('Should find "Entrar" button',
-        () => { cy.get('button').contains('Entrar') }
-    );
+        cy.get('[name="password"]')
+            .type('12345678')
 
-    it('Should find Register link',
-        () => { cy.get('a').contains('Registre-se') }
-    );
+        cy.get('button').contains('Entrar')
+            .click()
+
+        cy.url()
+            .should('include', '#contacts') // LOGIN SUCCESSFUL
+
+    })
 });

@@ -103,8 +103,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         },
       });
     }
-  }, []
-  );
+  }, []);
 
   const initial = useCallback(async () => {
     try {
@@ -122,8 +121,8 @@ function AuthProvider({ children }: AuthProviderProps) {
   const logout = async () => {
     try {
       await Auth.signOut()
-      dispatch({ type: Types.logout });
       push('/auth/login')
+      dispatch({ type: Types.logout });
     } catch (error) {
       console.log(error)
     }

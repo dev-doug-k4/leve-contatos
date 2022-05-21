@@ -1,6 +1,6 @@
 ## Leve Contatos
 
-Check out the [live-preview](https://main.dcj0rgv0wuk5j.amplifyapp.com/).
+Check this [live-preview](https://main.dcj0rgv0wuk5j.amplifyapp.com/).
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

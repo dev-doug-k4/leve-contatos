@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 // amplify
@@ -25,7 +24,7 @@ import Iconify from '../components/Iconify';
 import Header from '../components/Header';
 import ContactCard from '../components/ContactCard'
 // @types
-import { ListContactsQuery } from '../@types/API';
+import { ListContactsQuery, Contact } from '../@types/API';
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +33,7 @@ const Home = () => {
 
   const { isAuthenticated, isInitialized } = useAuth()
 
-  const [contacts, setContacts] = useState([])
+  const [contacts, setContacts] = useState<Contact[]>([])
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -54,17 +53,20 @@ const Home = () => {
     setIsLoading(false)
   };
 
+  const fetchContacts = async () => {
+    try {
+      const result = await (API.graphql(graphqlOperation(listContacts))) as { data: ListContactsQuery }
+      // @ts-ignore
+      setContacts(result.data.listContacts.items)
+      // console.log("Contacts retrieved successfully!", JSON.stringify(result, null, 2));
+    } catch (error) {
+      console.log("Error retrieving contacts", error);
+    }
+  }
+
   useEffect(() => {
     if (isAuthenticated && isInitialized) {
-      return async () => {
-        try {
-          const result = await (API.graphql(graphqlOperation(listContacts))) as { data: ListContactsQuery }
-          setContacts(result.data.listContacts.items)
-          // console.log("Contacts retrieved successfully!", JSON.stringify(result, null, 2));
-        } catch (error) {
-          console.log("Error retrieving contacts", error);
-        }
-      }
+      fetchContacts()
     }
   }, [isAuthenticated, isInitialized])
 
@@ -88,8 +90,7 @@ const Home = () => {
 
           <Grid container spacing={{ xs: 2, md: 3 }} my={{ xs: 1, md: 2 }}>
             {contacts.map((contact, index) =>
-              // @ts-ignore
-              <Grid key={contact.id} item xs={12} sm={12} md={12} >
+              <Grid key={contact.id} item xs={12} md={12} >
                 <ContactCard contact={contact} onDelete={() => handleDeleteContact(contact.id)} isLoading={isLoading} />
               </Grid>
             )}
