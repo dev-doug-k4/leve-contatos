@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// @ts-nocheck
 import { useEffect, useState, useCallback } from 'react'
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
@@ -96,13 +95,12 @@ export default function EstablismentGeneral() {
   const fetchContact = async () => {
     try {
       const result = await (API.graphql(graphqlOperation(getContact, { id: query.id }))) as { data: GetContactQuery }
-      console.log(result)
       const cont = result.data.getContact
 
-      if (!!result) {
-        setContact(cont)
-        setValue('phone', phoneMask(cont?.phone))
-        setValue('name', cont?.name)
+      if (!!result?.data?.getContact) {
+        setContact(result?.data?.getContact)
+        !!cont?.phone && setValue('phone', phoneMask(cont.phone))
+        !!cont?.name && setValue('name', cont.name)
         setValue('facebookLink', cont?.facebookLink)
         setValue('instagramLink', cont?.instagramLink)
         setValue('linkedinLink', cont?.linkedinLink)
@@ -132,7 +130,7 @@ export default function EstablismentGeneral() {
         await uploadFile(file?.fileResized, file?.fileName)
       }
 
-      if (file) {
+      if (!!file) {
         data = {
           ...data,
           // @ts-ignore
@@ -185,7 +183,7 @@ export default function EstablismentGeneral() {
 
     const canvas = createCanvas(img, 300)
     const imgBlob = await imgToBlobAsync(img, canvas)
-
+    // @ts-ignore
     const fileResized = new File([imgBlob], originalFileName, {
       type: 'image/*',
       lastModified: Date.now()
@@ -217,6 +215,7 @@ export default function EstablismentGeneral() {
                     <RHFUploadAvatar
                       name="cover"
                       fromS3={fromS3}
+                      // @ts-ignore
                       accept="image/*"
                       maxSize={3145728}
                       onDrop={handleDrop}

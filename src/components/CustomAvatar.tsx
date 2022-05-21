@@ -15,7 +15,7 @@ type Props = {
 export default function CustomAvatar({ src = '', alt, sx, ...other }: Props) {
   return (
     <Avatar
-      src={src}
+      // src={!!src ? src : undefined}
       alt={alt}
       color={!!src ? 'default' : createAvatar(!!alt ? alt : 'AA').color}
       sx={{ ...sx }}

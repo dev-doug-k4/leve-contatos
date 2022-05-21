@@ -49,7 +49,7 @@ function ContactItem({ contact, onDelete, isLoading }: Props) {
       }}
     >
       <Stack direction='row' alignItems='center' >
-        <NextLink href={PATH_APP.root + 'edit-contact/' + contact?.id} passHref>
+        <NextLink href={'/edit-contact/' + contact?.id} passHref>
           <Stack direction='row' alignItems='center' >
             {/* @ts-ignore */}
             <CustomAvatar src={contact?.cover || ''} alt={contact?.name} sx={{ height: { xs: 40, md: 50 }, width: { xs: 40, md: 50 } }} />
@@ -119,7 +119,7 @@ function MoreMenuButton({ contact, onDelete, isLoading }: Props) {
           '& .MuiMenuItem-root': { px: 1, typography: 'body2', borderRadius: 0.75 },
         }}
       >
-        <MenuItem onClick={() => push(PATH_APP.root + 'edit-contact/' + contact?.id)} >
+        <MenuItem onClick={() => push('/edit-contact/' + contact?.id)} >
           <Iconify icon={'eva:edit-fill'} sx={{ ...ICON }} />
           Editar
         </MenuItem>

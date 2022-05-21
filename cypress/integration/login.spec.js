@@ -2,7 +2,7 @@
 
 context('Login', () => {
     it('logging in user', () => {
-        cy.visit('http://localhost:3000/auth/login')
+        cy.visit('http://localhost:3000')
 
         cy.get('[name="email"]')
             .type('demo@testepagaleve.com')
@@ -13,8 +13,8 @@ context('Login', () => {
         cy.get('button').contains('Entrar')
             .click()
 
-        cy.url()
-            .should('include', '#contacts') // LOGIN SUCCESSFUL
+        cy.get('h4').contains('Contatos') // LOGIN SUCCESSFUL
+
 
     })
 });

@@ -82,7 +82,6 @@ export default function EstablismentGeneral() {
     handleSubmit,
     watch,
     reset,
-    setError,
     formState: { isSubmitting, isSubmitSuccessful, isDirty },
   } = methods;
 
@@ -96,7 +95,7 @@ export default function EstablismentGeneral() {
         await uploadFile(file?.fileResized, file?.fileName)
       }
 
-      if (file) {
+      if (!!file) {
         data = {
           ...data,
           // @ts-ignore
